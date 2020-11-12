@@ -1,8 +1,3 @@
-let csvFile = ["SBC_VMCAMIX_ISBC-01_CISCO_VIC_PERF_20201022-200208.csv"]
-let mediaURL = "https://perfanalyzer.rbbn.com/media/user/file_upload/"
-
-
-
 const attributeSelect = document.getElementById("attributeSelect");
 const singleSelectDownload = document.getElementById("singleSelectDownload");
 singleSelectDownload.addEventListener('click', (e) => {
