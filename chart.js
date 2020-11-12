@@ -1,40 +1,26 @@
 let csvFile = ["SBC_VMCAMIX_ISBC-01_CISCO_VIC_PERF_20201022-200208.csv"]
 let mediaURL = "https://perfanalyzer.rbbn.com/media/user/file_upload/"
 
-//Vue single select
-let myVueSingleSelect = new Vue({
-    delimiters: ['{', '}'],
-    el: '#app_single',
-    components: {
-    Multiselect: window.VueMultiselect.default
-    },
-    data: {
-    value: null,
-    options: csvFile,
-    },
-  methods: {
-    customLabel (option) {
-      return `${option}`
-    }}
-}).$mount('#app_single')
+
 
 const attributeSelect = document.getElementById("attributeSelect");
 const singleSelectDownload = document.getElementById("singleSelectDownload");
 singleSelectDownload.addEventListener('click', (e) => {
-    if (myVueSingleSelect.value === null) {
+  let filePath = document.getElementById("csvPath");
+    if (filePath.value === null) {
         alert("Please select a CSV file to proceed !!!")
     } else {
-        let csv_path = mediaURL+myVueSingleSelect.value;
-        e.target.href = csv_path;
+        e.target.href = filePath.value;
     }
 });
 document.getElementById("singleSelect").addEventListener('click', () => {
-    if (myVueSingleSelect.value === null) {
+  let filePath = document.getElementById("csvPath");
+    if (filePath.value === null) {
         attributeSelect.style.display = "none";
         document.getElementById("wrapper").style.display = "none";
         alert("Please select a CSV file to proceed !!!")
     } else {
-        let csv_path = mediaURL+myVueSingleSelect.value;
+        let csv_path = filePath.value;
         // Request data using D3
         d3
   .csv(csv_path)
@@ -78,6 +64,21 @@ function makeChart(csvObjects) {
     return `${d[key_id]}`;
   });
 
+
+  document.getElementById("attributeSelect").innerHTML = '';
+    document.getElementById("attributeSelect").innerHTML = '<div id="app" class="col-xs-11">\n' +
+        '                <multiselect\n' +
+        '                v-model="value"\n' +
+        '                placeholder="Searchable multi select csv column attributes"\n' +
+        '                :options="options"\n' +
+        '                :multiple="true"\n' +
+        '                :custom-label="customLabel"\n' +
+        '                >\n' +
+        '              </multiselect>\n' +
+        '            </div>\n' +
+        '            <div class="col-xs-1">\n' +
+        '                <button id="multiSelectChart" class="btn btn-primary">Visualize</button>\n' +
+        '            </div>';
   //Vue Multiselect
   let myVueSelect = new Vue({
     delimiters: ['{', '}'],
