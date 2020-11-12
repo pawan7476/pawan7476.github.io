@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>UniversalCSVAnalyzer</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link rel="shortcut icon" href="https://perfanalyzer.rbbn.com/media/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://demos.jquerymobile.com/1.4.2/css/themes/default/jquery.mobile-1.4.2.min.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    <script src="https://demos.jquerymobile.com/1.4.2/js/jquery.js"></script>
+    <script src="https://demos.jquerymobile.com/1.4.2/js/jquery.mobile-1.4.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js'></script>
+    <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
+    <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div id="app_single" class="col-xs-9">
+                <multiselect
+                v-model="value"
+                placeholder="Select csv file"
+                :options="options"
+                :custom-label="customLabel"
+                >
+              </multiselect>
+            </div>
+            <div class="col-xs-1">
+                <button id="singleSelect" class="btn-xs btn-primary">Select</button>
+            </div>
+            <div class="col-xs-2">
+                <a id="singleSelectUpload" class="btn fa fa-upload fa-fw" data-toggle="modal" data-target="#myModal" style="color:violet;" data-toggle="tooltip" data-placement="top"
+                title="Click to upload CSV !!!"></a>
+                <a id="singleSelectDownload" href="#" class="btn fa fa-download fa-fw" target="_blank" style="color:blueviolet;" data-toggle="tooltip" data-placement="top"
+                title="Click to download CSV !!!"></a>
+                <a id="singleSelectTrash" href="" class="btn fa fa-trash fa-fw" style="color:red;" data-toggle="tooltip" data-placement="top"
+                title="Click to delete CSV !!!" disabled="disabled"></a>
+            </div>
+        </div>
+        <br>
+        <div id="attributeSelect" class="row" hidden>
+            <div id="app" class="col-xs-9">
+                <multiselect
+                v-model="value"
+                placeholder="Searchable multi select csv column attributes"
+                :options="options"
+                :multiple="true"
+                :custom-label="customLabel"
+                >
+              </multiselect>
+            </div>
+            <div class="col-xs-3">
+                <button id="multiSelectChart" class="btn-xs btn-primary">Visualize</button>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <!--Charting-->
+    <div id="wrapper" class="container-fluid" hidden>
+        <div class="container-fluid" id="chartContainer">
+            <canvas id="chart"></canvas>
+        </div>
+        
+        <!--Range Slider-->
+    <form>
+        <div data-role="rangeslider" class="rangeSlider">
+            <input type="range" class="rangeA" name="range-1a" id="range-1a" min="1" max="100" value="1" data-popup-enabled="true" data-show-value="true">
+            <input type="range" class="rangeB" name="range-1b" id="range-1b" min="1" max="100" value="100000" data-popup-enabled="true" data-show-value="true">
+        </div>
+    </form>
+    <hr>
+    <div>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Attributes</th>
+                <th scope="col">Minimum</th>
+                <th scope="col">Maximum</th>
+                <th scope="col">Average</th>
+              </tr>
+            </thead>
+            <tbody class="injectStats">
+            </tbody>
+            </table> 
+    </div>
+    <hr>
+    </div>
+    <!--Added Scripts-->
+    <script src='supportPassiveEvent.js'></script>
+    <script src='chart.js'></script>
+</body>
+
+</html>
